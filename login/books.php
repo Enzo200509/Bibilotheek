@@ -1,7 +1,7 @@
 <?php include 'config.php';?>
 
 <main>
-    <a href="../opdracht_1/admin/inlog.php">Inloggen</a>
+    <a href="welcome.php">Terug</a>
     <h1>Boeken</h1>
     <!-- alles voor de Koop nu gedeelte -->
     <?php
@@ -16,8 +16,6 @@
             while ($liqry->fetch()) {
     ?>
                 <div class="container-books">
-                    <?php echo "ID: ", $ID ?>
-                    <br>
                     <?php echo "titel: ", $title ?>
                     <br>
                     <?php echo "auteur: ", $author ?>

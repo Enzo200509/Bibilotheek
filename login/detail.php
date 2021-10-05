@@ -1,16 +1,18 @@
 <?php
-include 'config.php';
+include ('config.php');
 $id = $_GET["id"];
+// echo $id
 ?>
 <html>
-
+<a href="books.php">Terug</a>
 <head>
-    <title></title>
+    <title>detail</title>
     <link rel="stylesheet" href="style2.css">
 </head>
 
 <body>
-    <?php $liqry = $conn->prepare("SELECT id, title, author,  publisher, pages, overview, lend FROM books WHERE id = $id");
+    <?php 
+    $liqry = $conn->prepare("SELECT id, title, author,  publisher, pages, overview, lend FROM books WHERE id = $id");
     if ($liqry === false) {
         trigger_error(mysqli_error($conn));
     } else {
@@ -33,9 +35,11 @@ $id = $_GET["id"];
                     <br>
                     <?php echo "samenvatting: <br> <br> ", $overview ?>
                     <br>
-                    <?php echo "<br>   Beschikbaar: ", $lend ?>
+                    <?php echo "<br> Beschikbaar: ", $lend ?>
                     <br>
-                    <a href="../opdracht_1/leen.php?id=<?php echo $ID ?>">Lenen</a>
+                    <form method="post"><input type="submit" value="leen" name="submit"></form>
+                    <form method="post"><input type="submit" value="inleveren" name="inleveren"></form>
+
                     <br>
                     <br>
                 </div>
@@ -48,3 +52,32 @@ $id = $_GET["id"];
 </body>
 
 </html>
+
+<?php 
+if(isset($_POST["submit"]) !="" ) {
+    $liqry = $conn->prepare("UPDATE `books` SET `lend`= 0 WHERE id=$id");
+    if ($liqry === false) {
+        trigger_error(mysqli_error($conn));
+    } else {
+        // $liqry->bind_param('s', $categoryName, $categoryDescription);
+        $liqry->execute(); 
+         
+        
+        $liqry->close();
+    }
+}
+
+if(isset($_POST["inleveren"]) !="" ) {
+    $liqry = $conn->prepare("UPDATE `books` SET `lend`= 1 WHERE id=$id");
+    if ($liqry === false) {
+        trigger_error(mysqli_error($conn));
+    } else {
+        // $liqry->bind_param('s', $categoryName, $categoryDescription);
+        $liqry->execute(); 
+         
+        
+        $liqry->close();
+    }
+}
+?>
+
